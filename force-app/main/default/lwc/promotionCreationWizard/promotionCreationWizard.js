@@ -2,6 +2,7 @@ import { LightningElement, api, track } from 'lwc';
 import { NavigationMixin } from 'lightning/navigation';
 
 /** TODO FOR THE CHALLENGE: import the state manager */
+import promotionStateManager from 'c/promotionStateManager';
 
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
@@ -13,8 +14,16 @@ export default class PromotionCreationWizard extends NavigationMixin(LightningEl
     currentStep = 1;
 
     /** TODO FOR THE CHALLENGE: initialize the state manager */
+    state = promotionStateManager;
 
     @track isSaving = false;
+    allValid() {
+        if (this.promotionName) {
+            this.state.promotionName = this.promotionName;
+            return true;
+        }
+        return false;
+    }
 
     handleNext() {
         if (this.currentStep === 1) {
